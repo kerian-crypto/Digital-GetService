@@ -898,7 +898,7 @@ def build_site_context(page: str) -> dict[str, Any]:
         people = (
             db.session.query(
                 ServicePeople,
-                func.group_concat(ServicesCatalog.name, ", ").label("service_names"),
+                func.string_agg(ServicesCatalog.name.cast(db.Text), ', ')
             )
             .outerjoin(ServicePeople.services)
             .filter(ServicePeople.is_active == 1)
