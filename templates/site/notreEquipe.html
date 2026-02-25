@@ -1,0 +1,47 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 data-aos="fade-up">Nos Chevronnes</h1>
+    </div>
+</section>
+
+<section class="container py-5">
+    {% if service_people %}
+    <div class="text-center mb-4" data-aos="fade-up">
+        <span class="badge-soft">Experts Actifs</span>
+    </div>
+    {% endif %}
+
+    <div class="row g-4">
+        {% for person in service_people %}
+        <div class="col-md-4 col-sm-6" data-aos="fade-up">
+            <div class="card h-100 border-0 shadow-sm p-3">
+                <div class="card-body">
+                    {% if person.photo_path %}
+                    <img src="{{ url_for('static', filename=person.photo_path) }}" class="rounded-circle mb-3" style="width:72px;height:72px;object-fit:cover;" alt="{{ person.full_name }}">
+                    {% endif %}
+                    <h5 class="card-title fw-bold mb-1">{{ person.full_name }}</h5>
+                    <p class="card-text text-primary mb-2">{{ person.specialty or 'Expert service' }}</p>
+                    <p class="small text-muted mb-2">{{ person.service_names or 'Service generaliste' }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% for membre in membres %}
+        <div class="col-md-4 col-sm-6" data-aos="fade-up">
+            <div class="card h-100 border-0 shadow-sm text-center p-3">
+                {% if membre.libelleImage %}
+                <img src="{{ url_for('static', filename='images/' ~ membre.libelleImage) }}" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;" alt="{{ membre.nom }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ membre.nom }}</h5>
+                    <p class="card-text text-primary">{{ membre.role }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

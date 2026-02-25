@@ -1,0 +1,40 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 data-aos="fade-up">Notre Histoire</h1>
+        <p class="lead" data-aos="fade-up" data-aos-delay="100">Un groupe de jeunes entrepreneurs passionnes par le digital</p>
+    </div>
+</section>
+
+<section class="container my-5 py-5">
+    <div class="row align-items-center g-5">
+        <div class="col-md-6" data-aos="fade-right">
+            <h2 class="fw-bold mb-4">Notre histoire</h2>
+            <p>Digital Get Services a ete fonde par un groupe de jeunes entrepreneurs partageant une vision commune.</p>
+            <p>Nous unissons nos competences en developpement, design et infrastructure reseau.</p>
+            <p>Chaque projet est une occasion de prouver notre valeur.</p>
+        </div>
+        <div class="col-md-6 text-center" data-aos="fade-left">
+            <img src="{{ url_for('static', filename='images/logo1.jpeg') }}" class="img-fluid rounded-4 shadow" style="max-width: 80%;" alt="Logo">
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="text-center mb-5" data-aos="fade-up">
+        <h2 class="fw-bold">Notre equipe</h2>
+    </div>
+    <div class="row g-4">
+        {% for membre in membres %}
+        <div class="col-md-4" data-aos="fade-up">
+            <div class="service-card">
+                <i class="{{ membre.icon }}"></i>
+                <h3>{{ membre.nom }}</h3>
+                <p>{{ membre.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
