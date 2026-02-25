@@ -1,0 +1,82 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h3>Nouveau service catalog</h3>
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="create_catalog">
+                <input class="form-control" type="text" name="name" placeholder="Nom du service" required>
+                <textarea class="form-control" name="description" rows="4" placeholder="Description"></textarea>
+                <select class="form-select" name="status">
+                    <option value="active">Actif</option>
+                    <option value="inactive">Inactif</option>
+                </select>
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h3>Services catalog existants</h3>
+            <div class="vstack gap-3">
+                {% for s in services %}
+                    <form method="post" class="admin-inline-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="hidden" name="id" value="{{ s.id }}">
+                        <input class="form-control" type="text" name="name" value="{{ s.name }}" required>
+                        <textarea class="form-control" name="description" rows="2">{{ s.description }}</textarea>
+                        <select class="form-select" name="status">
+                            <option value="active" {% if s.status == 'active' %}selected{% endif %}>Actif</option>
+                            <option value="inactive" {% if s.status == 'inactive' %}selected{% endif %}>Inactif</option>
+                        </select>
+                        <button class="btn btn-outline-primary" type="submit" name="action" value="update_catalog">Sauver</button>
+                        <button class="btn btn-outline-danger" type="submit" name="action" value="delete_catalog" onclick="return confirm('Supprimer ce service ?');">Supprimer</button>
+                    </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-1">
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h3>Nouveau service visuel</h3>
+            <form method="post" class="vstack gap-3" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="create_legacy">
+                <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                <textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea>
+                <textarea class="form-control" name="criteres_services" rows="4" placeholder="Criteres (une ligne par critere)"></textarea>
+                <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h3>Services visuels existants</h3>
+            <div class="vstack gap-3">
+                {% for s in legacy_services %}
+                    <form method="post" class="admin-inline-form" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="hidden" name="legacy_id" value="{{ s.id }}">
+                        <input class="form-control" type="text" name="nom" value="{{ s.nom }}" required>
+                        <textarea class="form-control" name="description" rows="2">{{ s.description }}</textarea>
+                        <textarea class="form-control" name="criteres_services" rows="3">{{ s.criteres_services }}</textarea>
+                        {% if s.libelleImage %}
+                        <img src="{{ url_for('static', filename='images/' ~ s.libelleImage) }}" alt="img" style="width:64px;height:64px;object-fit:cover;border-radius:8px;">
+                        {% endif %}
+                        <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                        <button class="btn btn-outline-primary" type="submit" name="action" value="update_legacy">Sauver</button>
+                        <button class="btn btn-outline-danger" type="submit" name="action" value="delete_legacy" onclick="return confirm('Supprimer ce service visuel ?');">Supprimer</button>
+                    </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

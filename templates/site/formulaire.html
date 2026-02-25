@@ -1,0 +1,50 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 data-aos="fade-up">Parlons de votre projet</h1>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="bg-white p-5 rounded-4 shadow-sm" data-aos="fade-up">
+                <h3 class="mb-4 text-center">Restons en contact</h3>
+                <form action="{{ url_for('contact_submit') }}" method="post" id="contactForm">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="nom" class="form-label">Nom *</label>
+                            <input type="text" class="form-control" id="nom" name="nom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="prenom" class="form-label">Prenom *</label>
+                            <input type="text" class="form-control" id="prenom" name="prenom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tel" class="form-label">Telephone *</label>
+                            <input type="tel" class="form-control" id="tel" name="tel" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="entreprise" class="form-label">Entreprise *</label>
+                            <input type="text" class="form-control" id="entreprise" name="entreprise" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea class="form-control" name="message" id="message" rows="5" required></textarea>
+                        </div>
+                        <div class="col-md-12 text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">Envoyer le message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

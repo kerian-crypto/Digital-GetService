@@ -1,0 +1,55 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<section class="auth-shell py-5">
+    <div class="container">
+        <div class="auth-card mx-auto">
+            <h1 class="h3 mb-3">Inscription</h1>
+            <form method="post" class="vstack gap-3" id="registerForm">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <div>
+                    <label class="form-label">Nom complet</label>
+                    <input class="form-control" type="text" name="full_name" required>
+                </div>
+                <div>
+                    <label class="form-label">Numero de telephone</label>
+                    <input class="form-control" type="text" name="phone" id="regPhone" required>
+                </div>
+                <div>
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="email" name="email" required>
+                </div>
+                <div>
+                    <label class="form-label">Type de personne</label>
+                    <select class="form-select" name="person_type" required>
+                        <option value="business_man">Business-man</option>
+                        <option value="chef_entreprise">Chef d entreprise</option>
+                        <option value="particulier">Particulier</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Langue preferee</label>
+                    <select class="form-select" name="preferred_lang" required>
+                        <option value="fr">Francais</option>
+                        <option value="en">English</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Mot de passe</label>
+                    <input class="form-control" type="password" name="password" id="regPassword" required>
+                </div>
+                <div>
+                    <label class="form-label">Confirmer le mot de passe</label>
+                    <input class="form-control" type="password" name="password_confirm" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Creer le compte</button>
+            </form>
+
+            <p class="mt-3 mb-0 small">Deja inscrit ? <a href="{{ url_for('site_page', page='login') }}">Connexion</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+{% endblock %}

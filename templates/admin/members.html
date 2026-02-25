@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h3>Nouveau membre</h3>
+            <form method="post" class="vstack gap-3" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="create">
+                <input class="form-control" type="text" name="nom" placeholder="Nom" required>
+                <input class="form-control" type="text" name="role" placeholder="Role">
+                <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h3>Membres existants</h3>
+            <div class="vstack gap-3">
+                {% for m in members %}
+                <form method="post" class="admin-inline-form" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="id" value="{{ m.id }}">
+                    <input class="form-control" type="text" name="nom" value="{{ m.nom }}" required>
+                    <input class="form-control" type="text" name="role" value="{{ m.role or '' }}">
+                    {% if m.libelleImage %}
+                    <img src="{{ url_for('static', filename='images/' ~ m.libelleImage) }}" alt="img" style="width:64px;height:64px;object-fit:cover;border-radius:8px;">
+                    {% endif %}
+                    <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                    <button class="btn btn-outline-primary" type="submit">Sauver</button>
+                    <button class="btn btn-outline-danger" type="submit" name="action" value="delete" onclick="return confirm('Supprimer ce membre ?');">Supprimer</button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

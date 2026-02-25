@@ -1,0 +1,39 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="admin-card">
+            <h3>Envoyer un email a tous les utilisateurs actifs</h3>
+            {% if stats %}
+                <div class="alert alert-info">
+                    Total: {{ stats.total }} | Envoyes: {{ stats.sent }} | Echecs: {{ stats.failed }}
+                </div>
+            {% endif %}
+
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <div>
+                    <label class="form-label" for="subject">Sujet</label>
+                    <input class="form-control" id="subject" name="subject" type="text" maxlength="160" required>
+                </div>
+                <div>
+                    <label class="form-label" for="message">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="10" required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Envoyer a tous</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="admin-card">
+            <h3>Notes</h3>
+            <ul class="mb-0">
+                <li>Seuls les utilisateurs actifs avec un email valide sont cibles.</li>
+                <li>Envoi individuel pour eviter l'exposition des adresses.</li>
+                <li>Config mail lue depuis variables d'environnement.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

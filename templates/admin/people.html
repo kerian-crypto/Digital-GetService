@@ -1,0 +1,94 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h3>Ajouter une personne service</h3>
+            <form method="post" class="vstack gap-3" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="create">
+                <input class="form-control" type="text" name="full_name" placeholder="Nom complet" required>
+                <input class="form-control" type="email" name="email" placeholder="Email">
+                <input class="form-control" type="text" name="phone" placeholder="Telephone">
+                <input class="form-control" type="text" name="specialty" placeholder="Specialite">
+                <div>
+                    <label class="form-label">Photo (optionnelle)</label>
+                    <input class="form-control" type="file" name="photo" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                </div>
+                <div>
+                    <small class="text-muted">Services assignes</small>
+                    <div class="service-checkboxes">
+                        {% for service in all_services %}
+                            <label>
+                                <input type="checkbox" name="service_ids[]" value="{{ service.id }}">
+                                {{ service.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h3>Equipe service</h3>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>Contact</th>
+                        <th>Specialite</th>
+                        <th>Services</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for person in people %}
+                        <tr>
+                            <td>
+                                {% if person.photo_path %}
+                                    <img src="{{ url_for('static', filename=person.photo_path) }}" alt="Photo" style="width:48px;height:48px;object-fit:cover;border-radius:50%;">
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ person.full_name }}
+                                <div><small class="badge {% if person.is_active == 1 %}bg-success{% else %}bg-secondary{% endif %}">{% if person.is_active == 1 %}Actif{% else %}Inactif{% endif %}</small></div>
+                            </td>
+                            <td>{{ person.email or '-' }}<br>{{ person.phone or '-' }}</td>
+                            <td>{{ person.specialty or '-' }}</td>
+                            <td>
+                                {% if person.services %}
+                                    {{ person.services | map(attribute='name') | join(', ') }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="d-flex gap-2">
+                                <form method="post">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                    <input type="hidden" name="action" value="toggle_active">
+                                    <input type="hidden" name="id" value="{{ person.id }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-warning">Activer/Desactiver</button>
+                                </form>
+                                <form method="post" onsubmit="return confirm('Supprimer cette personne service ?');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="{{ person.id }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

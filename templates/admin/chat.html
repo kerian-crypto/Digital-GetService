@@ -1,0 +1,36 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h3>Conversations recentes</h3>
+            {% if not conversations %}
+                <p class="text-muted mb-0">Aucune conversation.</p>
+            {% endif %}
+            <ul class="list-group list-group-flush">
+                {% for c in conversations %}
+                    <li class="list-group-item">
+                        #{{ c.id }} | users: {{ c.user_one_id }} / {{ c.user_two_id }}<br>
+                        <small>{{ c.updated_at or c.created_at }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h3>Messages recents</h3>
+            {% if not recent_messages %}
+                <p class="text-muted mb-0">Aucun message.</p>
+            {% endif %}
+            {% for row in recent_messages %}
+                <div class="message-preview">
+                    <strong>{{ row.sender_name }}</strong>
+                    <small>{{ row.Message.created_at }}</small>
+                    <p>{{ row.Message.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

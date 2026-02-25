@@ -1,0 +1,71 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="metric-card">
+            <div class="metric-title">Utilisateurs</div>
+            <div class="metric-value">{{ user_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <div class="metric-title">Services</div>
+            <div class="metric-value">{{ service_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <div class="metric-title">Personnes service</div>
+            <div class="metric-value">{{ people_count }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="metric-card">
+            <div class="metric-title">Messages chat</div>
+            <div class="metric-value">{{ message_count }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-1">
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h3>Derniers utilisateurs</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr><th>Nom</th><th>Email</th><th>Role</th><th>Date</th></tr>
+                    </thead>
+                    <tbody>
+                    {% for u in latest_users %}
+                        <tr>
+                            <td>{{ u.full_name }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{{ u.role }}</td>
+                            <td>{{ u.created_at }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h3>Derniers messages</h3>
+            {% if not latest_messages %}
+                <p class="text-muted mb-0">Aucun message pour le moment.</p>
+            {% else %}
+                {% for row in latest_messages %}
+                    <div class="message-preview">
+                        <strong>{{ row.sender_name }}</strong>
+                        <small>{{ row.Message.created_at }}</small>
+                        <p>{{ row.Message.content }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

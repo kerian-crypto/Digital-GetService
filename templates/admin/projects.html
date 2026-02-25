@@ -1,0 +1,46 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <h3>Nouveau projet</h3>
+            <form method="post" class="vstack gap-3" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="create">
+                <input class="form-control" type="text" name="nom" placeholder="Nom du projet" required>
+                <textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea>
+                <input class="form-control" type="text" name="lien_button" placeholder="Lien bouton (https://...)">
+                <input class="form-control" type="text" name="categorie" placeholder="Categorie (dev/design/...)">
+                <textarea class="form-control" name="criteres_services" rows="3" placeholder="Criteres"></textarea>
+                <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <h3>Projets existants</h3>
+            <div class="vstack gap-3">
+                {% for p in projects %}
+                <form method="post" class="admin-inline-form" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="id" value="{{ p.id }}">
+                    <input class="form-control" type="text" name="nom" value="{{ p.nom }}" required>
+                    <textarea class="form-control" name="description" rows="2">{{ p.description }}</textarea>
+                    <input class="form-control" type="text" name="lien_button" value="{{ p.lien_button or '' }}" placeholder="Lien bouton">
+                    <input class="form-control" type="text" name="categorie" value="{{ p.categorie or '' }}" placeholder="Categorie">
+                    <textarea class="form-control" name="criteres_services" rows="2">{{ p.criteres_services or '' }}</textarea>
+                    {% if p.libelleImage %}
+                    <img src="{{ url_for('static', filename='images/' ~ p.libelleImage) }}" alt="img" style="width:64px;height:64px;object-fit:cover;border-radius:8px;">
+                    {% endif %}
+                    <input class="form-control" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                    <button class="btn btn-outline-primary" type="submit">Sauver</button>
+                    <button class="btn btn-outline-danger" type="submit" name="action" value="delete" onclick="return confirm('Supprimer ce projet ?');">Supprimer</button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

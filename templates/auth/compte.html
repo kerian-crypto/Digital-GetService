@@ -1,0 +1,79 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<section class="auth-shell py-5">
+    <div class="container">
+        <div class="auth-card mx-auto mb-4">
+            <h1 class="h3 mb-3">Profil utilisateur</h1>
+            <p class="mb-2">Bienvenue, <strong>{{ profile_user.full_name }}</strong></p>
+            <ul class="list-unstyled mb-4">
+                <li><strong>Email:</strong> {{ profile_user.email }}</li>
+                <li><strong>Telephone:</strong> {{ profile_user.phone or '-' }}</li>
+                <li><strong>Type:</strong> {{ profile_user.person_type }}</li>
+                <li><strong>Role:</strong> {{ profile_user.role }}</li>
+            </ul>
+            {% if profile_user.role == 'admin' %}
+                <a class="btn btn-outline-primary" href="{{ url_for('backoffice_index') }}">Aller au back-office</a>
+            {% endif %}
+            <a class="btn btn-primary" href="{{ url_for('site_logout') }}">Deconnexion</a>
+        </div>
+
+        <div class="auth-card mx-auto mb-4">
+            <h2 class="h4 mb-3">Informations personnelles</h2>
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="update_profile">
+                <div>
+                    <label class="form-label">Nom complet</label>
+                    <input class="form-control" type="text" name="full_name" value="{{ profile_user.full_name }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="email" name="email" value="{{ profile_user.email }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Telephone</label>
+                    <input class="form-control" type="text" name="phone" value="{{ profile_user.phone or '' }}" required>
+                </div>
+                <div>
+                    <label class="form-label">Type de personne</label>
+                    <select class="form-select" name="person_type" required>
+                        <option value="business_man" {% if profile_user.person_type=='business_man' %}selected{% endif %}>Business-man</option>
+                        <option value="chef_entreprise" {% if profile_user.person_type=='chef_entreprise' %}selected{% endif %}>Chef d entreprise</option>
+                        <option value="particulier" {% if profile_user.person_type=='particulier' %}selected{% endif %}>Particulier</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Langue preferee</label>
+                    <select class="form-select" name="preferred_lang" required>
+                        <option value="fr" {% if profile_user.preferred_lang=='fr' %}selected{% endif %}>Francais</option>
+                        <option value="en" {% if profile_user.preferred_lang=='en' %}selected{% endif %}>English</option>
+                        <option value="de" {% if profile_user.preferred_lang=='de' %}selected{% endif %}>Deutsch</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+            </form>
+        </div>
+
+        <div class="auth-card mx-auto">
+            <h2 class="h4 mb-3">Changer le mot de passe</h2>
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="change_password">
+                <div>
+                    <label class="form-label">Mot de passe actuel</label>
+                    <input class="form-control" type="password" name="current_password" required>
+                </div>
+                <div>
+                    <label class="form-label">Nouveau mot de passe</label>
+                    <input class="form-control" type="password" name="new_password" required>
+                </div>
+                <div>
+                    <label class="form-label">Confirmer le nouveau mot de passe</label>
+                    <input class="form-control" type="password" name="confirm_new_password" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
