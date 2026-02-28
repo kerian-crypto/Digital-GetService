@@ -1,40 +1,53 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 <section class="hero-section">
     <div class="container text-center">
+        <p class="hero-kicker" data-aos="fade-down"><i class="ri-building-2-line"></i> ADN de l equipe</p>
         <h1 data-aos="fade-up">Notre Histoire</h1>
-        <p class="lead" data-aos="fade-up" data-aos-delay="100">Un groupe de jeunes entrepreneurs passionnes par le digital</p>
+        <p class="lead" data-aos="fade-up" data-aos-delay="100">Une equipe jeune, structurée et orientee impact.</p>
     </div>
 </section>
 
-<section class="container my-5 py-5">
-    <div class="row align-items-center g-5">
-        <div class="col-md-6" data-aos="fade-right">
-            <h2 class="fw-bold mb-4">Notre histoire</h2>
-            <p>Digital Get Services a ete fonde par un groupe de jeunes entrepreneurs partageant une vision commune.</p>
-            <p>Nous unissons nos competences en developpement, design et infrastructure reseau.</p>
-            <p>Chaque projet est une occasion de prouver notre valeur.</p>
-        </div>
-        <div class="col-md-6 text-center" data-aos="fade-left">
-            <img src="{{ url_for('static', filename='images/logo1.jpeg') }}" class="img-fluid rounded-4 shadow" style="max-width: 80%;" alt="Logo">
-        </div>
-    </div>
-</section>
-
-<section class="container my-5">
-    <div class="text-center mb-5" data-aos="fade-up">
-        <h2 class="fw-bold">Notre equipe</h2>
-    </div>
-    <div class="row g-4">
-        {% for membre in membres %}
-        <div class="col-md-4" data-aos="fade-up">
-            <div class="service-card">
-                <i class="{{ membre.icon }}"></i>
-                <h3>{{ membre.nom }}</h3>
-                <p>{{ membre.description }}</p>
+<section class="section-shell">
+    <div class="container">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="story-panel reveal spotlight-card h-100">
+                    <h2 class="fw-bold mb-4">Notre histoire</h2>
+                    <div class="timeline-item"><i class="ri-seedling-line"></i> Creation du collectif digital autour d'une vision commune.</div>
+                    <div class="timeline-item"><i class="ri-team-line"></i> Renforcement des expertises en design, dev et infrastructures.</div>
+                    <div class="timeline-item"><i class="ri-rocket-2-line"></i> Execution de projets qui apportent des resultats concrets.</div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="split-block reveal spotlight-card h-100">
+                    <div class="split-block-media">
+                        <img src="{{ url_for('static', filename='images/logo1.jpeg') }}" class="img-fluid" alt="Logo">
+                    </div>
+                </div>
             </div>
         </div>
-        {% endfor %}
+    </div>
+</section>
+
+<section class="section-shell pt-1">
+    <div class="container">
+        <div class="section-heading" data-aos="fade-up">
+            <span class="eyebrow">Talents</span>
+            <h2 class="fw-bold">Notre equipe</h2>
+        </div>
+        <div class="row g-4">
+            {% for membre in membres %}
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="service-card reveal tilt-card spotlight-card h-100">
+                    <span class="icon-chip"><i class="ri-user-star-line"></i></span>
+                    <i class="{{ membre.icon }} mt-3 d-block"></i>
+                    <h3>{{ membre.nom }}</h3>
+                    <p>{{ membre.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </section>
 {% endblock %}

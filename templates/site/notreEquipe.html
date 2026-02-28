@@ -2,11 +2,13 @@
 {% block content %}
 <section class="hero-section">
     <div class="container text-center">
+        <p class="hero-kicker" data-aos="fade-down"><i class="ri-team-line"></i> Expertises Humaines</p>
         <h1 data-aos="fade-up">Nos Chevronnes</h1>
     </div>
 </section>
 
-<section class="container py-5">
+<section class="section-shell">
+    <div class="container">
     {% if service_people %}
     <div class="text-center mb-4" data-aos="fade-up">
         <span class="badge-soft">Experts Actifs</span>
@@ -16,7 +18,7 @@
     <div class="row g-4">
         {% for person in service_people %}
         <div class="col-md-4 col-sm-6" data-aos="fade-up">
-            <div class="card h-100 border-0 shadow-sm p-3">
+            <div class="card h-100 border-0 shadow-sm p-3 reveal tilt-card spotlight-card">
                 <div class="card-body">
                     {% if person.photo_path %}
                     <img src="{{ url_for('static', filename=person.photo_path) }}" class="rounded-circle mb-3" style="width:72px;height:72px;object-fit:cover;" alt="{{ person.full_name }}">
@@ -31,7 +33,7 @@
 
         {% for membre in membres %}
         <div class="col-md-4 col-sm-6" data-aos="fade-up">
-            <div class="card h-100 border-0 shadow-sm text-center p-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-3 reveal tilt-card spotlight-card">
                 {% if membre.libelleImage %}
                 <img src="{{ url_for('static', filename='images/' ~ membre.libelleImage) }}" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;" alt="{{ membre.nom }}">
                 {% endif %}
@@ -42,6 +44,7 @@
             </div>
         </div>
         {% endfor %}
+    </div>
     </div>
 </section>
 {% endblock %}

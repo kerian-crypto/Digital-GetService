@@ -6,6 +6,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from functools import wraps
+from importlib.metadata import version as pkg_version
 from pathlib import Path
 from typing import Any
 
@@ -73,6 +74,26 @@ SITE_PAGE_SET = {
 }
 
 load_dotenv(BASE_DIR / ".env")
+
+
+def _version_tuple(value: str) -> tuple[int, ...]:
+    parts: list[int] = []
+    for token in value.split("."):
+        digits = "".join(ch for ch in token if ch.isdigit())
+        if not digits:
+            break
+        parts.append(int(digits))
+    return tuple(parts)
+
+
+def assert_flask_werkzeug_compatibility() -> None:
+    flask_ver = _version_tuple(pkg_version("flask"))
+    werkzeug_ver = _version_tuple(pkg_version("werkzeug"))
+    if flask_ver >= (3, 1, 0) and werkzeug_ver < (3, 1, 0):
+        raise RuntimeError(
+            "Incompatible versions detected: Flask >= 3.1 requires Werkzeug >= 3.1. "
+            f"Current versions: Flask {pkg_version('flask')}, Werkzeug {pkg_version('werkzeug')}."
+        )
 
 
 def create_app() -> Flask:
@@ -898,7 +919,7 @@ def build_site_context(page: str) -> dict[str, Any]:
         people = (
             db.session.query(
                 ServicePeople,
-                func.string_agg(ServicesCatalog.name.cast(db.Text), ', ')
+                func.group_concat(ServicesCatalog.name, ", ").label("service_names"),
             )
             .outerjoin(ServicePeople.services)
             .filter(ServicePeople.is_active == 1)
@@ -991,6 +1012,7 @@ def seed_default_admin() -> None:
     db.session.commit()
 
 
+assert_flask_werkzeug_compatibility()
 app = create_app()
 
 

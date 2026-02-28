@@ -1,27 +1,43 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 <section class="hero-section">
     <div class="container text-center">
+        <p class="hero-kicker" data-aos="fade-down"><i class="ri-medal-line"></i> References Clientes</p>
         <h1 data-aos="fade-up">Decouvrez Nos Projets Realises</h1>
     </div>
 </section>
 
-<section class="container py-5">
-    {% for realisation in realisations %}
-    <div class="row align-items-center mb-5 g-5 {% if loop.index0 % 2 == 1 %}flex-row-reverse{% endif %}" data-aos="fade-up">
-        <div class="col-md-6">
-            <h2 class="fw-bold mb-4">{{ realisation.nom }}</h2>
-            <p class="text-muted">{{ realisation.description }}</p>
-            {% if realisation.lien_button %}
-            <a href="{{ realisation.lien_button }}" class="btn btn-primary" target="_blank" rel="noopener">Voir le projet</a>
-            {% endif %}
+<section class="section-shell">
+    <div class="container">
+        <div class="section-heading reveal" data-aos="fade-up">
+            <span class="eyebrow">Portfolio</span>
+            <h2 class="fw-bold">Des realisations qui convertissent</h2>
+            <p class="text-muted">Chaque projet est pense pour la performance, la clarte UX et la croissance.</p>
         </div>
-        <div class="col-md-6 text-center">
-            {% if realisation.libelleImage %}
-            <img src="{{ url_for('static', filename='images/' ~ realisation.libelleImage) }}" class="img-fluid rounded-4 shadow" style="max-height: 350px;" alt="{{ realisation.nom }}">
-            {% endif %}
+
+        <div class="row g-4">
+            {% for realisation in realisations %}
+            <div class="col-md-6" data-aos="fade-up">
+                <article class="project-card reveal tilt-card spotlight-card h-100">
+                    <div class="project-media">
+                        {% if realisation.libelleImage %}
+                        <img src="{{ url_for('static', filename='images/' ~ realisation.libelleImage) }}" class="img-fluid" alt="{{ realisation.nom }}">
+                        {% endif %}
+                    </div>
+                    <div class="project-body">
+                        <p class="mini-tag mb-2"><i class="ri-briefcase-4-line"></i> Projet livre</p>
+                        <h3 class="h4 fw-bold">{{ realisation.nom }}</h3>
+                        <p class="text-muted mb-3">{{ realisation.description }}</p>
+                        {% if realisation.lien_button %}
+                        <a href="{{ realisation.lien_button }}" class="btn btn-primary magnetic-btn" target="_blank" rel="noopener">
+                            <i class="ri-external-link-line me-1"></i> Voir le projet
+                        </a>
+                        {% endif %}
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
 </section>
 {% endblock %}

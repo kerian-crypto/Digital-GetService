@@ -1,37 +1,64 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 <section class="hero-section">
     <div class="container text-center">
+        <p class="hero-kicker" data-aos="fade-down"><i class="ri-sparkling-2-line"></i> Offre Signature</p>
         <h1 data-aos="fade-up">Des Solutions Completes pour votre reussite digitale</h1>
     </div>
 </section>
 
-<section class="container py-5">
-    {% if services_catalog %}
-    <div class="row g-4 mb-5">
-        {% for service in services_catalog %}
-        <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <article class="service-card service-card-public h-100">
-                <h3 class="h4 mb-3">{{ service.name }}</h3>
-                <p class="text-muted mb-0">{{ service.description or 'Service professionnel sur mesure.' }}</p>
-            </article>
+<section class="section-shell">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-right">
+                <aside class="service-aside reveal tilt-card spotlight-card">
+                    <h3 class="h4 mb-3">Ce que vous gagnez</h3>
+                    <ul class="contact-points">
+                        <li><i class="ri-focus-3-line"></i> Positionnement clair</li>
+                        <li><i class="ri-time-line"></i> Delais maitrises</li>
+                        <li><i class="ri-bar-chart-box-line"></i> Resultats mesurables</li>
+                    </ul>
+                    <a href="{{ url_for('site_page', page='formulaire') }}" class="btn btn-primary w-100 mt-3 magnetic-btn">Parler a un expert</a>
+                    <p class="small text-muted mt-3 mb-0">Recevez une estimation rapide adaptee a votre besoin.</p>
+                </aside>
+            </div>
+            <div class="col-lg-8">
+                {% if services_catalog %}
+                <div class="row g-4 mb-4 stagger">
+                    {% for service in services_catalog %}
+                    <div class="col-md-6" data-aos="fade-up">
+                        <article class="service-card service-card-public h-100 reveal tilt-card spotlight-card">
+                            <span class="icon-chip"><i class="ri-cpu-line"></i></span>
+                            <h3 class="h4 mb-3">{{ service.name }}</h3>
+                            <p class="text-muted mb-0">{{ service.description or 'Service professionnel sur mesure.' }}</p>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
         </div>
-        {% endfor %}
-    </div>
-    {% endif %}
 
-    {% for service in legacy_services %}
-    <div class="row align-items-center mb-5 g-5 {% if loop.index0 % 2 == 1 %}flex-row-reverse{% endif %}" data-aos="fade-up">
-        <div class="col-md-6">
-            <h2 class="fw-bold mb-4">{{ service.nom }}</h2>
-            <p class="text-muted">{{ service.description }}</p>
-        </div>
-        <div class="col-md-6 text-center">
-            {% if service.libelleImage %}
-            <img src="{{ url_for('static', filename='images/' ~ service.libelleImage) }}" class="img-fluid rounded-4 shadow" style="max-height: 350px;" alt="{{ service.nom }}">
-            {% endif %}
+        <div class="legacy-stack mt-4">
+            {% for service in legacy_services %}
+            <article class="split-block mb-4 reveal spotlight-card" data-aos="fade-up">
+                <div class="row align-items-stretch g-0 {% if loop.index0 % 2 == 1 %}flex-row-reverse{% endif %}">
+                    <div class="col-md-6">
+                        <div class="p-4 p-md-5">
+                            <p class="mini-tag mb-2"><i class="ri-arrow-right-up-line"></i> Solution sur mesure</p>
+                            <h2 class="fw-bold mb-4">{{ service.nom }}</h2>
+                            <p class="text-muted mb-0">{{ service.description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 split-block-media text-center">
+                        {% if service.libelleImage %}
+                        <img src="{{ url_for('static', filename='images/' ~ service.libelleImage) }}" class="img-fluid" alt="{{ service.nom }}">
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
 </section>
 {% endblock %}

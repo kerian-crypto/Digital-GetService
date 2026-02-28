@@ -2,22 +2,23 @@
 {% block content %}
 <section class="auth-shell py-5">
     <div class="container">
-        <div class="auth-card mx-auto mb-4">
+        <div class="auth-card mx-auto mb-4 reveal tilt-card spotlight-card" data-aos="fade-up">
+            <p class="mini-tag mb-2"><i class="ri-account-circle-line"></i> Espace personnel</p>
             <h1 class="h3 mb-3">Profil utilisateur</h1>
             <p class="mb-2">Bienvenue, <strong>{{ profile_user.full_name }}</strong></p>
-            <ul class="list-unstyled mb-4">
+            <ul class="list-unstyled mb-4 profile-grid">
                 <li><strong>Email:</strong> {{ profile_user.email }}</li>
                 <li><strong>Telephone:</strong> {{ profile_user.phone or '-' }}</li>
                 <li><strong>Type:</strong> {{ profile_user.person_type }}</li>
                 <li><strong>Role:</strong> {{ profile_user.role }}</li>
             </ul>
             {% if profile_user.role == 'admin' %}
-                <a class="btn btn-outline-primary" href="{{ url_for('backoffice_index') }}">Aller au back-office</a>
+                <a class="btn btn-outline-primary magnetic-btn" href="{{ url_for('backoffice_index') }}">Aller au back-office</a>
             {% endif %}
-            <a class="btn btn-primary" href="{{ url_for('site_logout') }}">Deconnexion</a>
+            <a class="btn btn-primary magnetic-btn" href="{{ url_for('site_logout') }}">Deconnexion</a>
         </div>
 
-        <div class="auth-card mx-auto mb-4">
+        <div class="auth-card mx-auto mb-4 reveal tilt-card spotlight-card" data-aos="fade-up" data-aos-delay="100">
             <h2 class="h4 mb-3">Informations personnelles</h2>
             <form method="post" class="vstack gap-3">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
@@ -50,11 +51,11 @@
                         <option value="de" {% if profile_user.preferred_lang=='de' %}selected{% endif %}>Deutsch</option>
                     </select>
                 </div>
-                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                <button class="btn btn-primary magnetic-btn" type="submit">Enregistrer</button>
             </form>
         </div>
 
-        <div class="auth-card mx-auto">
+        <div class="auth-card mx-auto reveal tilt-card spotlight-card" data-aos="fade-up" data-aos-delay="200">
             <h2 class="h4 mb-3">Changer le mot de passe</h2>
             <form method="post" class="vstack gap-3">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
@@ -71,7 +72,7 @@
                     <label class="form-label">Confirmer le nouveau mot de passe</label>
                     <input class="form-control" type="password" name="confirm_new_password" required>
                 </div>
-                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                <button class="btn btn-primary magnetic-btn" type="submit">Enregistrer</button>
             </form>
         </div>
     </div>

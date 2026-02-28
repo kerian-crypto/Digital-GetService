@@ -2,49 +2,72 @@
 {% block content %}
 <section class="hero-section">
     <div class="container text-center">
+        <p class="hero-kicker" data-aos="fade-down"><i class="ri-customer-service-2-line"></i> Assistance projet</p>
         <h1 data-aos="fade-up">Parlons de votre projet</h1>
+        <p class="lead" data-aos="fade-up" data-aos-delay="100">Reponse sous 24h avec une proposition concrete.</p>
     </div>
 </section>
 
-<section class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="bg-white p-5 rounded-4 shadow-sm" data-aos="fade-up">
-                <h3 class="mb-4 text-center">Restons en contact</h3>
+<section class="section-shell">
+    <div class="container">
+    <div class="row g-4 align-items-stretch">
+        <div class="col-lg-4">
+            <aside class="contact-aside reveal tilt-card" data-aos="fade-right">
+                <h3 class="h4 mb-3">Restons proches</h3>
+                <p class="text-muted mb-4">Dites-nous vos objectifs, on vous recontacte rapidement avec une proposition claire.</p>
+                <ul class="contact-points">
+                    <li><i class="ri-mail-open-line"></i> Contact email prioritaire</li>
+                    <li><i class="ri-phone-find-line"></i> Appel de cadrage</li>
+                    <li><i class="ri-time-line"></i> Reponse en 24h</li>
+                </ul>
+                <div class="trust-box mt-4">
+                    <i class="ri-shield-check-line"></i>
+                    <span>Vos donnees restent confidentielles.</span>
+                </div>
+            </aside>
+        </div>
+        <div class="col-lg-8">
+            <div class="contact-panel p-4 p-md-5 rounded-4 reveal spotlight-card" data-aos="fade-up">
+                <h3 class="mb-2 text-center">Demande de contact</h3>
+                <p class="text-muted text-center mb-4">Champs marques * obligatoires</p>
                 <form action="{{ url_for('contact_submit') }}" method="post" id="contactForm">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="nom" class="form-label">Nom *</label>
-                            <input type="text" class="form-control" id="nom" name="nom" required>
+                            <input type="text" class="form-control" id="nom" name="nom" placeholder="Ex: Dupont" required>
                         </div>
                         <div class="col-md-6">
                             <label for="prenom" class="form-label">Prenom *</label>
-                            <input type="text" class="form-control" id="prenom" name="prenom" required>
+                            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Ex: Marie" required>
                         </div>
                         <div class="col-md-6">
                             <label for="tel" class="form-label">Telephone *</label>
-                            <input type="tel" class="form-control" id="tel" name="tel" required>
+                            <input type="tel" class="form-control" id="tel" name="tel" placeholder="+237 ..." required>
                         </div>
                         <div class="col-md-6">
                             <label for="email" class="form-label">Email *</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="vous@entreprise.com" required>
                         </div>
                         <div class="col-md-12">
                             <label for="entreprise" class="form-label">Entreprise *</label>
-                            <input type="text" class="form-control" id="entreprise" name="entreprise" required>
+                            <input type="text" class="form-control" id="entreprise" name="entreprise" placeholder="Nom de votre structure" required>
                         </div>
                         <div class="col-md-12">
                             <label for="message" class="form-label">Message *</label>
-                            <textarea class="form-control" name="message" id="message" rows="5" required></textarea>
+                            <textarea class="form-control" name="message" id="message" rows="5" placeholder="Decrivez votre besoin, objectifs et delai souhaite..." required></textarea>
                         </div>
                         <div class="col-md-12 text-center mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">Envoyer le message</button>
+                            <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill magnetic-btn submit-btn" data-default-text="Envoyer ma demande">
+                                Envoyer ma demande
+                            </button>
+                            <p class="small text-muted mt-2 mb-0">En cliquant, vous acceptez d etre recontacte(e) pour cette demande.</p>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+    </div>
     </div>
 </section>
 {% endblock %}
