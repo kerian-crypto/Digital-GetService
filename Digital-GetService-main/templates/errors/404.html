@@ -1,0 +1,7 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<section class="container py-5 text-center">
+    <h1 class="display-6">La page demandee est introuvable.</h1>
+    <a class="btn btn-primary" href="{{ url_for('site_page', page='accueil') }}">Retour a l accueil</a>
+</section>
+{% endblock %}

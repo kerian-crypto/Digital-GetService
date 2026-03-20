@@ -1,0 +1,82 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h3>Header du site</h3>
+            <form method="post" class="vstack gap-3" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="update_header">
+                <input class="form-control" type="text" name="nom" placeholder="Nom du site" value="{{ header.nom if header else '' }}">
+                <input class="form-control" type="text" name="slogan" placeholder="Slogan" value="{{ header.slogan if header else '' }}">
+                {% if header and header.logo %}
+                <img src="{{ url_for('static', filename='images/' ~ header.logo) }}" alt="Logo" style="width:80px;height:80px;object-fit:contain;border-radius:12px;" loading="lazy">
+                {% endif %}
+                <input class="form-control" type="file" name="logo" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h3>Contact footer</h3>
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="update_contact">
+                <input class="form-control" type="email" name="email" placeholder="Email" value="{{ footer_contact.email if footer_contact else '' }}">
+                <input class="form-control" type="text" name="telephone" placeholder="Telephone" value="{{ footer_contact.telephone if footer_contact else '' }}">
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-1">
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h3>Reseaux sociaux</h3>
+            <form method="post" class="vstack gap-2 mb-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="create_social">
+                <input class="form-control" type="text" name="icon" placeholder="Classe icone (ex: ri-facebook-fill)" required>
+                <input class="form-control" type="text" name="lien" placeholder="Lien" required>
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+            <div class="vstack gap-2">
+                {% for item in socials %}
+                <form method="post" class="admin-inline-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="id" value="{{ item.id }}">
+                    <input class="form-control" type="text" name="icon" value="{{ item.icon }}" required>
+                    <input class="form-control" type="text" name="lien" value="{{ item.lien }}" required>
+                    <button class="btn btn-outline-primary" type="submit" name="action" value="update_social">Sauver</button>
+                    <button class="btn btn-outline-danger" type="submit" name="action" value="delete_social" onclick="return confirm('Supprimer ce reseau ?');">Supprimer</button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <h3>Services footer</h3>
+            <form method="post" class="vstack gap-2 mb-3">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="action" value="create_footer_service">
+                <input class="form-control" type="text" name="criteres" placeholder="Libelle" required>
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </form>
+            <div class="vstack gap-2">
+                {% for item in footer_services %}
+                <form method="post" class="admin-inline-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="hidden" name="id" value="{{ item.id }}">
+                    <input class="form-control" type="text" name="criteres" value="{{ item.criteres }}" required>
+                    <button class="btn btn-outline-primary" type="submit" name="action" value="update_footer_service">Sauver</button>
+                    <button class="btn btn-outline-danger" type="submit" name="action" value="delete_footer_service" onclick="return confirm('Supprimer ce service footer ?');">Supprimer</button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="chat-layout"
+     data-current-user-id="{{ current_user_id }}"
+     data-csrf-token="{{ csrf_token }}"
+     data-api-base="{{ api_base }}"
+     data-ws-url="{{ ws_url }}"
+     data-ws-token="{{ ws_token }}">
+    <div class="chat-users-panel">
+        <div class="chat-header" id="chatHeader">Selectionnez un utilisateur pour commencer.</div>
+        <div class="chat-users-list" id="chatUsers">
+            <div class="text-muted small">Chargement des utilisateurs...</div>
+        </div>
+    </div>
+    <div class="chat-main-panel">
+        <div class="chat-messages" id="chatMessages">
+            <p class="text-muted small mb-0">Aucun message pour le moment.</p>
+        </div>
+        <form class="chat-form" id="chatForm">
+            <input class="form-control" id="chatMessageInput" placeholder="Votre message..." disabled>
+            <button class="btn btn-primary" id="chatSendButton" type="submit" disabled>Envoyer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin-chat.js') }}"></script>
+{% endblock %}
